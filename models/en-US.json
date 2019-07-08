@@ -1,0 +1,57 @@
+{
+	"intents": [
+		{
+			"name": "AnswerIntent",
+			"phrases": [
+				"{answer}",
+				"I'd say {answer}",
+				"I would say {answer}",
+				"it is a {answer}",
+				"it's a {answer}"
+			],
+			"inputs": [
+				{
+					"name": "answer",
+					"type": {
+						"alexa": "AMAZON.NUMBER",
+						"dialogflow": "@sys.number"
+					}
+				}
+			]
+		},
+        {
+			"name": "HelpIntent",
+			"alexa": {
+				"name": "AMAZON.HelpIntent"
+			},
+			"phrases": [
+				"help",
+				"help me",
+				"i don't understand this",
+				"i need help",
+				"what do you mean",
+				"what does that mean",
+				"how",
+				"why"
+			]
+		},
+		{
+			"name": "StopIntent",
+			"phrases": [
+				"stop",
+				"cancel",
+				"stop the app"
+			],
+			"alexa": {
+				"name": "AMAZON.StopIntent"
+			},
+			"dialogflow": {
+				"events": [
+					{
+						"name": "actions_intent_CANCEL"
+					}
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,33 @@
+{
+    "name": "jovo-component-survey",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/src/index",
+    "types": "dist/src/index.d.ts",
+    "scripts": {
+        "tslint": "tslint -p tsconfig.json -c tslint.json",
+        "tsc": "tsc",
+        "tscw": "tsc --watch",
+        "rimraf": "rimraf ./dist",
+        "typedoc": "typedoc --out ./docs --mode file"
+    },
+    "author": "jovotech",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "jovo-framework": "^2.2.11"
+    },
+    "devDependencies": {
+        "@types/express": "^4.16.1",
+        "@types/node": "^10.3.1",
+        "prettier": "1.17.1",
+        "rimraf": "^2.6.2",
+        "source-map-support": "^0.5.8",
+        "tslint": "^5.17.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typedoc": "^0.13.0",
+        "typescript": "^3.4.1"
+    },
+    "files": [
+        "dist/src/**/*"
+    ]
+}
