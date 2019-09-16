@@ -1,10 +1,10 @@
 import { Handler, PluginConfig } from 'jovo-core';
-import { Component } from 'jovo-framework';
+import { ComponentPlugin } from 'jovo-framework';
 
 import { Config, SurveyConfig } from './src/config';
 import { surveyHandler } from './src/handler';
 
-export class ConductSurvey extends Component {
+export class ConductSurvey extends ComponentPlugin {
     handler: Handler = surveyHandler;
     config: SurveyConfig = Config;
     pathToI18n = './src/i18n/';
