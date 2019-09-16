@@ -4,7 +4,7 @@ import { Component } from 'jovo-framework';
 import { Config, SurveyConfig } from './src/config';
 import { surveyHandler } from './src/handler';
 
-export class Survey extends Component {
+export class ConductSurvey extends Component {
     handler: Handler = surveyHandler;
     config: SurveyConfig = Config;
     pathToI18n = './src/i18n/';
