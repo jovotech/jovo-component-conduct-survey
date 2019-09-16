@@ -2,14 +2,30 @@ import { Handler, Jovo } from 'jovo-core';
 import { ComponentResponse } from 'jovo-framework';
 
 const surveyHandler: Handler = {
-    SURVEY: {
+    ConductSurvey: {
         START() {
-            this.$session.$data.COMPONENT_SURVEY = {
+            // Handle parsing of default data
+            if (this.$components.ConductSurvey.data) {
+                const values: string[] = Object.values(this.$components.ConductSurvey.data.answers);
+                
+                if (values.length === this.$components.ConductSurvey.config.numberOfQuestions) {
+                    // every k
+                    const allValuesDefined = values.every(value => {
+                        return value; 
+                    });
+
+                    if (allValuesDefined) {
+                        return sendComponentResponse(this, 'SUCCESSFUL');
+                    }
+                }
+            }
+
+            this.$session.$data.COMPONENT_ConductSurvey = {
                 answers: {},
                 questionCount: 1
-            }
-            this.$speech.t('component-survey.start', {numberOfQuestions: this.$components.SURVEY.config.numberOfQuestions});
-            this.$speech.t(`component-survey.questions.${this.$session.$data.COMPONENT_SURVEY.questionCount}`);
+            };
+            this.$speech.t('component-ConductSurvey.start', {numberOfQuestions: this.$components.ConductSurvey.config.numberOfQuestions});
+            this.$speech.t(`component-ConductSurvey.questions.${this.$session.$data.COMPONENT_ConductSurvey.questionCount}`);
 
             return this.ask(this.$speech);
         },
@@ -21,22 +37,34 @@ const surveyHandler: Handler = {
                 answer = parseInt(answer, 10);
             }
 
-            const questionCount = this.$session.$data.COMPONENT_SURVEY.questionCount;
-            this.$session.$data.COMPONENT_SURVEY.answers[`${questionCount}`] = answer;
+            if (answer < 1 || answer > 5) {
+                this.$speech.t('component-ConductSurvey.invalid-answer');
+                this.$speech.t(`component-ConductSurvey.questions.${this.$session.$data.COMPONENT_ConductSurvey.questionCount}`);
+                
+                return this.ask(this.$speech);
+            }
 
-            if (questionCount >= this.$components.SURVEY.config.numberOfQuestions) {
-                return sendComponentResponse(this, 'SUCCESSFUL', {answers: this.$session.$data.COMPONENT_SURVEY.answers});
+            const questionCount = this.$session.$data.COMPONENT_ConductSurvey.questionCount;
+            this.$session.$data.COMPONENT_ConductSurvey.answers[`${questionCount}`] = answer;
+
+            if (questionCount >= this.$components.ConductSurvey.config.numberOfQuestions ||
+                questionCount >= this.t('component-ConductSurvey.questions').length) {
+
+                this.$components.ConductSurvey.data.answers = this.$session.$data.COMPONENT_ConductSurvey.answers;
+
+                return sendComponentResponse(this, 'SUCCESSFUL');
             }
             else {
-                this.$session.$data.COMPONENT_SURVEY.questionCount++;
-                this.$speech.t(`component-survey.questions.${this.$session.$data.COMPONENT_SURVEY.questionCount}`);
+                this.$session.$data.COMPONENT_ConductSurvey.questionCount++;
+                this.$speech.t(`component-ConductSurvey.questions.${this.$session.$data.COMPONENT_ConductSurvey.questionCount}`);
 
                 return this.ask(this.$speech);
             }
         },
 
         HelpIntent() {
-            this.$speech.t('component-survey.help');
+            this.$speech.t('component-ConductSurvey.help');
+            this.$speech.t(`component-ConductSurvey.questions.${this.$session.$data.COMPONENT_ConductSurvey.questionCount}`);
     
             return this.ask(this.$speech);
         },
@@ -46,9 +74,7 @@ const surveyHandler: Handler = {
         },
     
         ON_ERROR() {
-            const error = this.$handleRequest!.error;
-
-            return sendComponentResponse(this, 'ERROR', undefined, error);
+            return sendComponentResponse(this, 'ERROR');
         },
     
         Unhandled() {
@@ -57,20 +83,18 @@ const surveyHandler: Handler = {
     }
 }
 
-function sendComponentResponse(jovo: Jovo, status: 'SUCCESSFUL' | 'ERROR' | 'REJECTED', data?: object, error?: Error): Promise<void> {
+function sendComponentResponse(jovo: Jovo, status: 'SUCCESSFUL' | 'ERROR' | 'REJECTED'): Promise<void> {
     const response: ComponentResponse = {
         status
     };
 
-    if (data) {
-        response.data = data;
-    } else if (error) {
-        response.error = error;
+    if (status === 'SUCCESSFUL') {
+        response.data = jovo.$components.ConductSurvey.data;
+    } else if (status === 'ERROR') {
+        response.error = jovo.$handleRequest!.error;
     }
 
-    jovo.$components.SURVEY.$response = response;
-
-    return jovo.toStateIntent(jovo.$components.SURVEY.stateBeforeDelegate, jovo.$components.SURVEY.onCompletedIntent!);
+    return jovo.sendComponentResponse(response);
 }
 
 export {surveyHandler};
