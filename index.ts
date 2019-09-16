@@ -1,4 +1,4 @@
-import { Handler, PluginConfig } from 'jovo-core';
+import { Handler } from 'jovo-core';
 import { ComponentPlugin } from 'jovo-framework';
 
 import { Config, SurveyConfig } from './src/config';
@@ -9,7 +9,7 @@ export class ConductSurvey extends ComponentPlugin {
     config: SurveyConfig = Config;
     pathToI18n = './src/i18n/';
 
-    constructor(config?: PluginConfig) {
+    constructor(config?: SurveyConfig) {
         super(config);
     }
 }
