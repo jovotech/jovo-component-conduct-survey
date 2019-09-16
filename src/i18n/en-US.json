@@ -1,0 +1,15 @@
+{
+    "translation": {
+        "component-ConductSurvey": {
+            "help": "Simply answer to the questions with a number between 1 and 5, where 1 is the worst and 5 is the best.",
+            "questions": {
+                "1": "Question 1",
+                "2": "Question 2",
+                "3": "Question 3",
+                "4": "Question 4"
+            },
+            "start": "Please help me improve by answering the {{numberOfQuestions}} following questions with a number between 1 and 5, where 1 is the worst and 5 is the best.",
+            "invalid-answer": "Please answer with a number between 1 and 5. "
+        }
+    }
+}
