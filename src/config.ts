@@ -8,7 +8,6 @@ const config: SurveyConfig = {
     intentMap: {
         'AMAZON.HelpIntent': 'HelpIntent',
         'AMAZON.StopIntent': 'END',
-        'StopIntent': 'END'
     },
     numberOfQuestions: 3
 };
