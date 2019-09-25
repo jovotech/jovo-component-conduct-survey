@@ -80,6 +80,7 @@ Help | &nbsp; | &nbsp; | &nbsp;
 &nbsp; | Simply answer to the questions with a number between 1 and 5, where 1 is the worst and 5 is the best. Question x| &nbsp; | help, question.x
 5 | &nbsp; | &nbsp; | &nbsp; 
 ----> run through other questions <----
+</details>
 
 ## Response
 
