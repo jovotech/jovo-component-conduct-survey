@@ -5,9 +5,12 @@ import { Config, SurveyConfig } from './src/config';
 import { surveyHandler } from './src/handler';
 
 export class ConductSurvey extends ComponentPlugin {
-    handler: Handler = surveyHandler;
     config: SurveyConfig = Config;
     pathToI18n = './src/i18n/';
+    name = 'jovo-component-conduct-survey';
+    handler: Handler = {
+        [this.name!]: surveyHandler
+    };
 
     constructor(config?: SurveyConfig) {
         super(config);
