@@ -30,16 +30,14 @@ Last but not least you have to include the component in your `app.js`:
 
 import { ConductSurvey } from './components/jovo-component-conduct-survey';
 
-const ConductSurveyComponent = new ConductSurvey();
-app.useComponents(ConductSurveyComponent);
+app.useComponents(new ConductSurvey());
 
 // @language=javascript
 // src/app.js
 
 const { ConductSurvey } = require("../components/jovo-component-conduct-survey");
 
-const ConductSurveyComponent = new ConductSurvey();
-app.useComponents(ConductSurveyComponent);
+app.useComponents(new ConductSurvey());
 ```
 
 ## Sample Dialog
@@ -120,7 +118,7 @@ Example:
 module.exports = {
     // ...
     components: {
-        ConductSurvey: {
+        'jovo-component-conduct-survey': {
             numberOfQuestions: 5
         }
     }
