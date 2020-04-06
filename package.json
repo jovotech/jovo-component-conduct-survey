@@ -28,7 +28,7 @@
         "typescript": "^3.4.1"
     },
     "files": [
-        "dist/src/**/*",
+        "dist/**/*",
         "models/*"
     ]
 }
