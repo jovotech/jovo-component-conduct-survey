@@ -30,9 +30,5 @@
         "tslint-config-prettier": "^1.18.0",
         "typedoc": "^0.17.4",
         "typescript": "^3.4.1"
-    },
-    "files": [
-        "dist/**/*",
-        "models/*"
-    ]
+    }
 }
